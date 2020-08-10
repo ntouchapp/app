@@ -2500,6 +2500,13 @@ expo-constants@9.1.1, expo-constants@^9.1.1, expo-constants@~9.1.1:
     fbjs "1.0.0"
     uuid "^3.3.2"
 
+expo-contacts@~8.2.1:
+  version "8.2.1"
+  resolved "https://registry.yarnpkg.com/expo-contacts/-/expo-contacts-8.2.1.tgz#e1b5587116ac4339b4680511a2b9ea4313bcf56d"
+  integrity sha512-RCToHcsitrfFjLPrgNTvFJX+JeUusQNhXmK1Z2OeIUUCcsPrGx9kvpeI7iP/txdJOLoAVZ33rbyVl4gYsmHR6A==
+  dependencies:
+    uuid "^3.4.0"
+
 expo-error-recovery@~1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/expo-error-recovery/-/expo-error-recovery-1.2.1.tgz#a8fd68950235d4f22b30d901bfc90f7732720b93"
@@ -4083,6 +4090,11 @@ mkdirp@^0.5.1:
   dependencies:
     minimist "^1.2.5"
 
+moment@^2.27.0:
+  version "2.27.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.27.0.tgz#8bff4e3e26a236220dfe3e36de756b6ebaa0105d"
+  integrity sha512-al0MUK7cpIcglMv3YF13qSgdAIqxHTO7brRtaz3DlSULbqfazqkc5kEjNrLDOM7fsjshoFIihnU8snrP7zUvhQ==
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
@@ -4628,6 +4640,11 @@ react-native-appearance@~0.3.3:
     fbemitter "^2.1.1"
     invariant "^2.2.4"
     use-subscription "^1.0.0"
+
+react-native-contacts@^5.2.5:
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/react-native-contacts/-/react-native-contacts-5.2.5.tgz#e4acd8deb5e0ba987df54504a6d1822697c5cb65"
+  integrity sha512-KmPaYtCRxDvTIItktGc9PruZN/l1H+ATlR18ge7R/XUVXq4QNLHeFx7uTYqL9p0N48+Xaca7+Ga/FsItNa0hcg==
 
 react-native-gesture-handler@~1.6.0:
   version "1.6.1"
