@@ -20,7 +20,6 @@ const HomeScreen = ({ navigation }) => {
         <View>
           <Text>{contactInfo.name}</Text>
           <Text>{contactInfo.phoneNumber}</Text>
-          <Text>{contactInfo.email}</Text>
         </View>
         <View />
         <Text>
