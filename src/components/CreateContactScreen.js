@@ -15,20 +15,12 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 import sendPushNotification from '../utils/sendPushNotification';
 import getToken from '../utils/getExpoToken';
-import FormField from './FormField';
 import DateButton from './DateButton';
-
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: false,
-  }),
-});
+import { TextInput } from 'react-native-gesture-handler';
 
 export const CreateContactScreen = ({ navigation }) => {
   const { addContact } = useContext(ContactContext);
-  const { handleSubmit, reset, getValues } = useForm();
+  const { handleSubmit, reset, getValues, control } = useForm();
   const expoToken = getToken();
 
   const [date, setDate] = useState(new Date());
@@ -55,6 +47,7 @@ export const CreateContactScreen = ({ navigation }) => {
   };
 
   function onSubmit(data) {
+    console.log(data);
     addContact(data, moment(date));
     Keyboard.dismiss();
     sendPushNotification(expoToken, data, date);
@@ -73,15 +66,54 @@ export const CreateContactScreen = ({ navigation }) => {
       <Text>Create new contact</Text>
       <View>
         <View>
-          <FormField text="Name:" name="name" placeholder="Name..." />
+          <View>
+            <Text>Name: </Text>
+            <Controller
+              control={control}
+              render={({ onChange, onBlur, value }) => (
+                <TextInput
+                  placeholder="name"
+                  onChangeText={(value) => onChange(value)}
+                  value={value}
+                />
+              )}
+              name="name"
+              rules={{ required: true }}
+            />
+          </View>
 
-          <FormField
-            text="Phone number:"
-            name="phoneNumber"
-            placeholder="Phone number..."
-          />
+          <View>
+            <Text>Phone number: </Text>
+            <Controller
+              control={control}
+              render={({ onChange, onBlur, value }) => (
+                <TextInput
+                  placeholder="Phone number..."
+                  onChangeText={(value) => onChange(value)}
+                  value={value}
+                />
+              )}
+              name="phoneNumber"
+              rules={{ required: true }}
+            />
+          </View>
 
-          <FormField text="Email:" name="email" placeholder="Email..." />
+          <View>
+            <Text>Email: </Text>
+            <Controller
+              control={control}
+              render={({ onChange, onBlur, value }) => (
+                <TextInput
+                  placeholder="Email..."
+                  onChangeText={(value) => onChange(value)}
+                  value={value}
+                />
+              )}
+              name="email"
+              rules={{ required: true }}
+              defaultValue=""
+            />
+          </View>
         </View>
 
         <View>

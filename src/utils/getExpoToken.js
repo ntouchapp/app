@@ -22,6 +22,12 @@ export default function getExpoToken() {
       Notifications.removeAllNotificationListeners();
     };
   }, []);
-
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: false,
+    }),
+  });
   return expoToken;
 }
