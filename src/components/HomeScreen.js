@@ -1,6 +1,13 @@
 import React, { useContext } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
-import { View, TouchableOpacity, SafeAreaView, Text, Button, Image } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  SafeAreaView,
+  Text,
+  Button,
+  Image,
+} from 'react-native';
 import { ContactContext } from '../context/ContactContext';
 import moment from 'moment';
 const HomeScreen = ({ navigation }) => {
@@ -8,82 +15,28 @@ const HomeScreen = ({ navigation }) => {
 
   const renderItem = ({ item: { contactInfo, id, date } }) => {
     return (
-      <View
-        style={{
-          borderWidth: 0,
-          marginVertical: 5,
-          marginHorizontal: 20,
-          width: '90%',
-          maxWidth: 500,
-          alignSelf: 'center',
-          display: 'flex',
-          backgroundColor: 'white',
-          borderRadius: 7,
-          padding: 5,
-          shadowColor: "#000",
-          shadowOffset: {
-            width: 0,
-            height: 3,
-          },
-          shadowOpacity: 0.18,
-          shadowRadius: 2.62,
-          elevation: 4,
-          justifyContent: 'space-around'
-        }}
-      >
-        <View
-          style={{
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            position: 'relative'
-          }}
-        >
-          <Text style={{
-            fontSize: 26,
-            color: '#799ead',
-            textAlign: 'left',
-            fontWeight: '600',
-            textShadowColor: '#716992', 
-            textShadowOffset: { width: 0.5, height: 0.5 },
-            textShadowRadius: 0.5, 
-          }}>{contactInfo.name}</Text>
-          <Text style={{
-            fontSize: 22,
-            color: '#799ead',
-            textAlign:'left',
-            fontWeight: '300'
-          }}>{contactInfo.phoneNumber}</Text>
-         <Text style={{
-            fontSize: 20,
-            color: '#799ead',
-            textAlign: 'left',
-            fontWeight: '300'
-          }}>{contactInfo.email}</Text>
+      <View>
+        <View>
+          <Text>{contactInfo.name}</Text>
+          <Text>{contactInfo.phoneNumber}</Text>
+          <Text>{contactInfo.email}</Text>
         </View>
-        <View
-          style={{
-            borderBottomColor: '#799ead',
-            borderBottomWidth: 1,
-            height: '10%',
-            opacity: '.3',
-            marginLeft: 2,
-            marginRight: 2,
-            marginBottom: 3
+        <View />
+        <Text>
+          Reminder set for:
+          <Text
+            style={{
+              fontSize: 18,
+              color: '#799ead',
+              fontWeight: '300',
             }}
-        />
-        <Text style={{ 
-           fontSize: 20 ,
-           color: '#799ead',
-           fontWeight: '500'
-        }}>
-          Reminder set for: 
-        
-        <Text style={{
-          fontSize: 18,
-          color: '#799ead',
-          fontWeight: '300'
-        }}> {moment(date).format('L')} at {moment(date).format('LT')}</Text></Text>
-        <TouchableOpacity style ={{
+          >
+            {' '}
+            {moment(date).format('L')} at {moment(date).format('LT')}
+          </Text>
+        </Text>
+        <TouchableOpacity
+          style={{
             position: 'absolute',
             top: 1,
             right: 10,
@@ -92,14 +45,21 @@ const HomeScreen = ({ navigation }) => {
             borderRadius: '5',
             height: 22,
             alignSelf: 'flex-end',
-            textAlign: 'center'
-          }} onPress={() => deleteContact(id)}>
-          <Text style = {{
-            color: '#fcf7e1',
-            paddingTop: '1%',
-            paddingBottom: '1%',
-          }}> Delete </Text>
-          </TouchableOpacity>
+            textAlign: 'center',
+          }}
+          onPress={() => deleteContact(id)}
+        >
+          <Text
+            style={{
+              color: '#fcf7e1',
+              paddingTop: '1%',
+              paddingBottom: '1%',
+            }}
+          >
+            {' '}
+            Delete{' '}
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -112,26 +72,37 @@ const HomeScreen = ({ navigation }) => {
           flex: 1,
           alignItems: 'center',
           justifyContent: 'center',
-          
         }}
       >
-    <View>
-        <Text style = {{
-          fontSize: 30,
-          color: '#716992',
-          textAlign: 'center',
-          fontWeight: '700'
-        }}>Welcome to nTouch!</Text>
-        <Image style={{ width: 300, height: 300}}
-        source = {{uri: 'https://i.pinimg.com/originals/ab/53/c3/ab53c3258caa5c3c691b4de46cb5ad88.gif',}}/>
-      </View>
+        <View>
+          <Text
+            style={{
+              fontSize: 30,
+              color: '#716992',
+              textAlign: 'center',
+              fontWeight: '700',
+            }}
+          >
+            Welcome to nTouch!
+          </Text>
+          <Image
+            style={{ width: 300, height: 300 }}
+            source={{
+              uri:
+                'https://i.pinimg.com/originals/ab/53/c3/ab53c3258caa5c3c691b4de46cb5ad88.gif',
+            }}
+          />
+        </View>
         <Text
-        style = {{
-          fontSize: 25,
-          alignItems: 'center',
-          textAlign: 'center',
-          color: '#799ead'
-        }}>You haven't added any contacts yet.</Text>
+          style={{
+            fontSize: 25,
+            alignItems: 'center',
+            textAlign: 'center',
+            color: '#799ead',
+          }}
+        >
+          You haven't added any contacts yet.
+        </Text>
         <TouchableOpacity
           style={{
             backgroundColor: '#abc7b9',
@@ -160,7 +131,7 @@ const HomeScreen = ({ navigation }) => {
     );
   } else {
     return (
-      <SafeAreaView style={{ flex: 1,backgroundColor: '#fcf7e1',}}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#fcf7e1' }}>
         <FlatList
           data={contacts}
           renderItem={renderItem}
