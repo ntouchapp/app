@@ -7,7 +7,6 @@ import CreateContactScreen from './src/components/CreateContactScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ContactProvider from './src/context/ContactContext';
 
-
 const Tab = createBottomTabNavigator();
 
 // TODO: Add a splash screen
@@ -27,12 +26,7 @@ export default function App() {
               return <Ionicons name={iconName} size={size} color={'#716992'} />;
             },
           })}
-          tabBarOptions={{
-            color: 'black',
-            activeTintColor: '#fcf7e1',
-            inactiveTintColor: 'gray',
-            activeBackgroundColor: '#abc7b9'
-          }}
+          tabBarOptions={{}}
         >
           <Tab.Screen name="Home" component={HomeScreen} />
           <Tab.Screen name="Add Contact" component={CreateContactScreen} />
