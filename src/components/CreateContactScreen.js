@@ -47,7 +47,6 @@ export const CreateContactScreen = ({ navigation }) => {
   };
 
   function onSubmit(data) {
-    console.log(data);
     addContact(data, moment(date));
     Keyboard.dismiss();
     sendPushNotification(expoToken, data, date);
