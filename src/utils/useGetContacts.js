@@ -27,5 +27,5 @@ export default () => {
     })();
   }, []);
 
-  return { data, error };
+  return { error };
 };
