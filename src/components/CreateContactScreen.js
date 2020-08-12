@@ -1,6 +1,4 @@
-import React, { useState, useContext } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import * as Notifications from 'expo-notifications';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   SafeAreaView,
   Text,
@@ -8,24 +6,32 @@ import {
   Platform,
   TouchableOpacity,
   Keyboard,
+  Alert,
 } from 'react-native';
 
 import { ContactContext } from '../context/ContactContext';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
+import { useForm } from 'react-hook-form';
 import sendPushNotification from '../utils/sendPushNotification';
 import getToken from '../utils/getExpoToken';
 import DateButton from './DateButton';
-import { TextInput } from 'react-native-gesture-handler';
+import FormField from './FormField';
 
 export const CreateContactScreen = ({ navigation }) => {
   const { addContact } = useContext(ContactContext);
-  const { handleSubmit, reset, getValues, control } = useForm();
+  const { register, handleSubmit, setValue, reset } = useForm();
   const expoToken = getToken();
 
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
+
+  useEffect(() => {
+    register('name');
+    register('phoneNumber');
+    register('email');
+  }, [register]);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || data;
@@ -46,74 +52,54 @@ export const CreateContactScreen = ({ navigation }) => {
     showMode('time');
   };
 
-  function onSubmit(data) {
-    console.log(data);
+  function showAlert() {
+    try {
+      Alert.alert(
+        'Success!',
+        'You have successfully added a contact',
+        [
+          {
+            text: 'Cancel',
+          },
+          {
+            text: 'Ok',
+            onPress: () => navigation.navigate('Home'),
+          },
+        ],
+        { cancelable: 'false' }
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  function successOption(data) {
     addContact(data, moment(date));
     Keyboard.dismiss();
     sendPushNotification(expoToken, data, date);
-
     reset({
       name: '',
       phoneNumber: '',
       email: '',
     });
-
-    navigation.navigate('Home');
+    showAlert();
   }
+
+  const onSubmit = (data) => {
+    try {
+      successOption(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <SafeAreaView>
       <Text>Create new contact</Text>
       <View>
         <View>
-          <View>
-            <Text>Name: </Text>
-            <Controller
-              control={control}
-              render={({ onChange, onBlur, value }) => (
-                <TextInput
-                  placeholder="name"
-                  onChangeText={(value) => onChange(value)}
-                  value={value}
-                />
-              )}
-              name="name"
-              rules={{ required: true }}
-            />
-          </View>
-
-          <View>
-            <Text>Phone number: </Text>
-            <Controller
-              control={control}
-              render={({ onChange, onBlur, value }) => (
-                <TextInput
-                  placeholder="Phone number..."
-                  onChangeText={(value) => onChange(value)}
-                  value={value}
-                />
-              )}
-              name="phoneNumber"
-              rules={{ required: true }}
-            />
-          </View>
-
-          <View>
-            <Text>Email: </Text>
-            <Controller
-              control={control}
-              render={({ onChange, onBlur, value }) => (
-                <TextInput
-                  placeholder="Email..."
-                  onChangeText={(value) => onChange(value)}
-                  value={value}
-                />
-              )}
-              name="email"
-              rules={{ required: true }}
-              defaultValue=""
-            />
-          </View>
+          <FormField name="name" text="Name: " fn={setValue} />
+          <FormField name="phoneNumber" text="Phone Number: " fn={setValue} />
+          <FormField text="Email: " name="email" fn={setValue} />
         </View>
 
         <View>
@@ -121,11 +107,7 @@ export const CreateContactScreen = ({ navigation }) => {
           <DateButton text="Choose Date:" dateFn={showDatePicker} />
         </View>
 
-        <TouchableOpacity
-          onPress={() => {
-            handleSubmit(onSubmit(getValues()));
-          }}
-        >
+        <TouchableOpacity onPress={handleSubmit(onSubmit)}>
           <Text>Add to contacts</Text>
         </TouchableOpacity>
       </View>
