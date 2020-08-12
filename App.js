@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import CreateContactScreen from './src/components/CreateContactScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ContactProvider from './src/context/ContactContext';
+import ContactListScreen from './src/components/ContactListScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -30,6 +31,7 @@ export default function App() {
         >
           <Tab.Screen name="Home" component={HomeScreen} />
           <Tab.Screen name="Add Contact" component={CreateContactScreen} />
+          <Tab.Screen name="Contacts" component={ContactListScreen} />
         </Tab.Navigator>
       </ContactProvider>
     </NavigationContainer>

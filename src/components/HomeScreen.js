@@ -1,18 +1,31 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import {
   View,
   TouchableOpacity,
   SafeAreaView,
   Text,
-  Button,
-  Image,
+  Alert,
 } from 'react-native';
 import { ContactContext } from '../context/ContactContext';
 import moment from 'moment';
+import useGetContacts from '../utils/useGetContacts';
 
 const HomeScreen = ({ navigation }) => {
-  const { contacts, deleteContact } = useContext(ContactContext);
+  const { contacts, deleteContact, addUserContacts } = useContext(
+    ContactContext
+  );
+  const { data, error } = useGetContacts();
+
+  if (!error) {
+    addUserContacts(data);
+  } else {
+    Alert.alert('Contacts', error, [
+      {
+        text: 'Ok',
+      },
+    ]);
+  }
 
   if (!contacts.length) {
     return (

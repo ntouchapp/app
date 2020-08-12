@@ -14,9 +14,7 @@ export default function getExpoToken() {
     Notifications.addNotificationReceivedListener((notification) => {
       setNotification(notification);
     });
-    Notifications.addNotificationResponseReceivedListener((response) => {
-      console.log(response);
-    });
+    Notifications.addNotificationResponseReceivedListener((response) => {});
 
     return () => {
       Notifications.removeAllNotificationListeners();

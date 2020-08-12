@@ -4,6 +4,7 @@ export const ContactContext = createContext();
 
 const ContactProvider = ({ children }) => {
   const [contacts, setContacts] = useState([]);
+  const [userContacts, setUserContacts] = useState([]);
 
   function addContact(contactInfo, date) {
     setContacts([
@@ -12,12 +13,24 @@ const ContactProvider = ({ children }) => {
     ]);
   }
 
+  function addUserContacts(contacts) {
+    setUserContacts(contacts);
+  }
+
   function deleteContact(id) {
     setContacts(contacts.filter((contact) => contact.id !== id));
   }
 
   return (
-    <ContactContext.Provider value={{ addContact, contacts, deleteContact }}>
+    <ContactContext.Provider
+      value={{
+        addContact,
+        contacts,
+        deleteContact,
+        addUserContacts,
+        userContacts,
+      }}
+    >
       {children}
     </ContactContext.Provider>
   );
