@@ -2,9 +2,11 @@ import React, { useContext } from 'react';
 import { View, Text } from 'react-native';
 import { ContactContext } from '../context/ContactContext';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 
-function ContactListScreen() {
+import { useNavigation } from '@react-navigation/native';
+
+function ContactListScreen({ navigation }) {
   const { userContacts } = useContext(ContactContext);
 
   if (!userContacts) {
@@ -14,9 +16,10 @@ function ContactListScreen() {
       <SafeAreaView style={{ backgroundColor: 'yellow', flex: 1 }}>
         <FlatList
           data={userContacts}
-          renderItem={renderItem}
+          renderItem={({ item }) => <Item item={item} />}
           keyExtractor={(item) => item.id}
           extraData={userContacts}
+          navigation={navigation}
         />
       </SafeAreaView>
     );
@@ -26,17 +29,18 @@ function checkField(field, key) {
   return typeof field === 'undefined' ? 'N/A' : field[0][key];
 }
 
-const renderItem = ({ item: { phoneNumbers, name, emails } }) => {
+function Item({ item: { phoneNumbers, name, emails } }) {
   let phoneNumber = checkField(phoneNumbers, 'number');
   let email = checkField(emails, 'email');
+  const navigation = useNavigation();
 
   return (
-    <View>
+    <TouchableOpacity onPress={() => navigation.navigate('ScheduleContact')}>
       <Text style={{ color: 'black' }}>{name}</Text>
       <Text style={{ color: 'black' }}>{phoneNumber}</Text>
       <Text style={{ color: 'black' }}>{email}</Text>
-    </View>
+    </TouchableOpacity>
   );
-};
+}
 
 export default ContactListScreen;
