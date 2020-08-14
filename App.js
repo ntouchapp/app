@@ -23,7 +23,7 @@ function ContactStackContainer() {
         options={{ tabBarLabel: 'Contacts' }}
       />
       <ContactStack.Screen
-        name="ScheduleContact"
+        name="Schedule Contact"
         component={ScheduleContactScreen}
       />
     </ContactStack.Navigator>

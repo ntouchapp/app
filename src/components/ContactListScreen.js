@@ -35,7 +35,15 @@ function Item({ item: { phoneNumbers, name, emails } }) {
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('ScheduleContact')}>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate('Schedule Contact', {
+          name: name,
+          phoneNumber: phoneNumber,
+          email: email,
+        })
+      }
+    >
       <Text style={{ color: 'black' }}>{name}</Text>
       <Text style={{ color: 'black' }}>{phoneNumber}</Text>
       <Text style={{ color: 'black' }}>{email}</Text>

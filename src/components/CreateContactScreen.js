@@ -9,10 +9,11 @@ import {
   Alert,
 } from 'react-native';
 
+import moment from 'moment';
 import { ContactContext } from '../context/ContactContext';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import moment from 'moment';
 import { useForm } from 'react-hook-form';
+
 import sendPushNotification from '../utils/sendPushNotification';
 import getToken from '../utils/getExpoToken';
 import DateButton from './DateButton';

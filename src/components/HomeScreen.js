@@ -12,9 +12,7 @@ import moment from 'moment';
 import useGetContacts from '../utils/useGetContacts';
 
 const HomeScreen = ({ navigation }) => {
-  const { contacts, deleteContact, addUserContacts } = useContext(
-    ContactContext
-  );
+  const { contacts, addUserContacts, dContact } = useContext(ContactContext);
   const { data, error } = useGetContacts();
 
   if (!error) {
@@ -68,7 +66,7 @@ const renderItem = ({ item: { contactInfo, id, date } }) => {
           {moment(date).format('L')} at {moment(date).format('LT')}
         </Text>
       </Text>
-      <TouchableOpacity onPress={() => deleteContact(id)}>
+      <TouchableOpacity onPress={() => dContact(id)}>
         <Text> Delete </Text>
       </TouchableOpacity>
     </View>
