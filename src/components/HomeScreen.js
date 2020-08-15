@@ -10,9 +10,15 @@ import {
 import { ContactContext } from '../context/ContactContext';
 import moment from 'moment';
 import useGetContacts from '../utils/useGetContacts';
+import getExpoToken from '../utils/getExpoToken';
 
 const HomeScreen = ({ navigation }) => {
-  const { contacts, addUserContacts, dContact } = useContext(ContactContext);
+  const { contacts, addUserContacts, dContact, setToken } = useContext(
+    ContactContext
+  );
+  const token = getExpoToken();
+  setToken(token);
+
   const { data, error } = useGetContacts();
 
   if (!error) {

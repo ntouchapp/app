@@ -5,6 +5,7 @@ export const ContactContext = createContext();
 const ContactProvider = ({ children }) => {
   const [contacts, setContacts] = useState([]);
   const [userContacts, setUserContacts] = useState([]);
+  const [token, setToken] = useState();
 
   function addContact(contactInfo, date) {
     setContacts([
@@ -29,6 +30,8 @@ const ContactProvider = ({ children }) => {
         dContact,
         addUserContacts,
         userContacts,
+        token,
+        setToken,
       }}
     >
       {children}

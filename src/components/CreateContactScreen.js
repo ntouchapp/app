@@ -15,7 +15,6 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { useForm } from 'react-hook-form';
 
 import sendPushNotification from '../utils/sendPushNotification';
-import getToken from '../utils/getExpoToken';
 import DateButton from './DateButton';
 import FormField from './FormField';
 
@@ -24,11 +23,9 @@ export const CreateContactScreen = ({ navigation }) => {
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
-  const { addContact } = useContext(ContactContext);
+  const { addContact, token } = useContext(ContactContext);
 
   const { register, handleSubmit, setValue, reset } = useForm();
-
-  const expoToken = getToken();
 
   useEffect(() => {
     register('name');
@@ -78,7 +75,7 @@ export const CreateContactScreen = ({ navigation }) => {
   function successOption(data) {
     addContact(data, moment(date));
     Keyboard.dismiss();
-    sendPushNotification(expoToken, data, date);
+    sendPushNotification(token, data, date);
     reset({
       name: '',
       phoneNumber: '',
