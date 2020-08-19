@@ -1,197 +1,131 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import * as Notifications from 'expo-notifications';
-import { SafeAreaView, Text, View, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
-import registerForPushNotificationsAsync from '../utils/registerPushNotifications';
+import React, { useState, useContext, useEffect } from 'react';
+import {
+  SafeAreaView,
+  Text,
+  View,
+  Platform,
+  TouchableOpacity,
+  Keyboard,
+  Alert,
+} from 'react-native';
+
 import { ContactContext } from '../context/ContactContext';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment';
+import { useForm } from 'react-hook-form';
+import sendPushNotification from '../utils/sendPushNotification';
+import getToken from '../utils/getExpoToken';
+import DateButton from './DateButton';
+import FormField from './FormField';
 
-// TODO: clean up this component
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: false,
-  }),
-});
+export const CreateContactScreen = ({ navigation }) => {
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
 
-export const CreateContactScreen = () => {
-  const [expoPushToken, setExpoPushToken] = useState('');
-  const [, setNotification] = useState(false);
   const { addContact } = useContext(ContactContext);
 
-  const { control, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue, reset } = useForm();
 
-  // TODO: clean up with a hook + async/await
+  const expoToken = getToken();
+
   useEffect(() => {
-    registerForPushNotificationsAsync().then((token) =>
-      setExpoPushToken(token)
-    );
-    Notifications.addNotificationReceivedListener((notification) => {
-      setNotification(notification);
-    });
-    Notifications.addNotificationResponseReceivedListener((response) => {
-      console.log(response);
-    });
+    register('name');
+    register('phoneNumber');
+    register('email');
+  }, [register]);
 
-    return () => {
-      Notifications.removeAllNotificationListeners();
-    };
-  }, []);
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || data;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+  };
 
-  function onSubmit(data) {
-    addContact(data);
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatePicker = () => {
+    showMode('date');
+  };
+
+  const showTimePicker = () => {
+    showMode('time');
+  };
+
+  function showAlert() {
+    try {
+      Alert.alert(
+        'Success!',
+        'You have successfully added a contact',
+        [
+          {
+            text: 'Cancel',
+          },
+          {
+            text: 'Ok',
+            onPress: () => navigation.navigate('Home'),
+          },
+        ],
+        { cancelable: 'false' }
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  function successOption(data) {
+    addContact(data, moment(date));
+    Keyboard.dismiss();
+    sendPushNotification(expoToken, data, date);
+    reset({
+      name: '',
+      phoneNumber: '',
+      email: '',
+    });
+    showAlert();
   }
 
+  const onSubmit = (data) => {
+    try {
+      successOption(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
-    <SafeAreaView
-      style={{
-        display: 'flex',
-        flex: 1,
-        backgroundColor: '#ecfcac',
-      }}
-    >
-      <Text
-        style={{
-          textAlign: 'center',
-          fontSize: 30,
-          marginTop: 20,
-        }}
-      >
-        Create new contact
-      </Text>
-      {/* TODO: create components out of these fields */}
-      <View
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-        }}
-      >
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            margin: 30,
-          }}
-        >
-          <Text style={{ flex: 0.5, fontSize: 22 }}>Name: </Text>
-          <Controller
-            control={control}
-            render={({ onChange, onBlur, value }) => (
-              <TextInput
-                placeholder="name"
-                onChangeText={(value) => onChange(value)}
-                value={value}
-                style={{
-                  flex: 1,
-                  padding: 9,
-                  borderBottomColor: 'black',
-                  borderBottomWidth: 1,
-                  fontSize: 20
-                }}
-              />
-            )}
-            name="name"
-            rules={{ required: true }}
-            defaultValue=""
-          />
+    <SafeAreaView>
+      <Text>Create new contact</Text>
+      <View>
+        <View>
+          <FormField name="name" text="Name: " fn={setValue} />
+          <FormField name="phoneNumber" text="Phone Number: " fn={setValue} />
+          <FormField text="Email: " name="email" fn={setValue} />
         </View>
 
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            margin: 30,
-          }}
-        >
-          <Text style={{ fontSize: 22 }}>Phone number: </Text>
-          <Controller
-            control={control}
-            render={({ onChange, onBlur, value }) => (
-              <TextInput
-                placeholder="number"
-                style={{
-                  flex: 2,
-                  padding: 10,
-                  borderBottomColor: 'black',
-                  borderBottomWidth: 1,
-                  fontSize: 20
-                }}
-                onChangeText={(value) => onChange(value)}
-                value={value}
-              />
-            )}
-            name="phoneNumber"
-            defaultValue=""
-          />
+        <View>
+          <DateButton text="Choose Time:" dateFn={showTimePicker} />
+          <DateButton text="Choose Date:" dateFn={showDatePicker} />
         </View>
 
-        <View
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            margin: 30,
-          }}>
-        <Text style={{ fontSize: 22 }}>Email: </Text>
-          <Controller
-            control={control}
-            render={({ onChange, onBlur, value }) => (
-              <TextInput
-                placeholder="Email"
-                style={{
-                  flex: 2,
-                  padding: 10,
-                  borderBottomColor: 'black',
-                  borderBottomWidth: 1,
-                  fontSize: 20
-                }}
-                onChangeText={(value) => onChange(value)}
-                value={value}
-              />
-            )}
-            name="email"
-            defaultValue=""
-          />
-
-        </View>
-          <TouchableOpacity
-            style={{
-              borderRadius: 10,
-              width: 200,
-              height: 40,
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: '#6bbfff',
-            }}
-            onPress={handleSubmit(onSubmit)}
-          >
-            <Text style={{ color: 'white' , fontSize: 18}}>Add to contacts</Text>
-          </TouchableOpacity>
+        <TouchableOpacity onPress={handleSubmit(onSubmit)}>
+          <Text>Add to contacts</Text>
+        </TouchableOpacity>
       </View>
+
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          display="default"
+          onChange={onChange}
+        />
+      )}
     </SafeAreaView>
   );
 };
-
-async function sendPushNotification(expoPushToken, { name, phoneNumber }) {
-  const message = {
-    to: expoPushToken,
-    sound: 'default',
-    title: 'A friendly reminder 😁',
-    body: `Don't forget to reach out to ${name} today. Their number is ${phoneNumber} 😇`,
-  };
-
-  Notifications.scheduleNotificationAsync({
-    content: message,
-    trigger: {
-      seconds: 10,
-    },
-  });
-}
 
 export default CreateContactScreen;

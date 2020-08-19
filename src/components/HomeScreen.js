@@ -1,84 +1,47 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
-import { View, TouchableOpacity, SafeAreaView, Text } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  SafeAreaView,
+  Text,
+  Alert,
+} from 'react-native';
 import { ContactContext } from '../context/ContactContext';
+import moment from 'moment';
+import useGetContacts from '../utils/useGetContacts';
 
 const HomeScreen = ({ navigation }) => {
-  const { contacts, deleteContact } = useContext(ContactContext);
-  const renderItem = ({ item: { contactInfo, id } }) => {
-    return (
-      <View
-        style={{
-          borderColor: 'black',
-          borderWidth: 1,
-          marginVertical: 5,
-          marginHorizontal: 20,
-          display: 'flex',
-          backgroundColor: '#b0f4f7',
-        }}>
-        <View
-          style={{
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <Text style={{ fontSize: 26 }}>{contactInfo.name}</Text>
-          <Text>{contactInfo.phoneNumber}</Text>
-          <Text>{contactInfo.email}</Text>
-        </View>
-        <Text style={{ alignSelf: 'center', fontSize: 24 }}>
-          [Contact Date Here]
-        </Text>
-        <TouchableOpacity onPress={() => deleteContact(id)}>
-          <Text>Delete</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  };
+  const { contacts, deleteContact, addUserContacts } = useContext(
+    ContactContext
+  );
+  const { data, error } = useGetContacts();
+
+  if (!error) {
+    addUserContacts(data);
+  } else {
+    Alert.alert('Contacts', error, [
+      {
+        text: 'Ok',
+      },
+    ]);
+  }
 
   if (!contacts.length) {
     return (
-      <SafeAreaView
-        style={{
-          backgroundColor: '#ecfcac',
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Text
-        style = {{
-          fontSize: 20,
-          alignItems: 'center',
-        }}>You haven't added any contacts yet</Text>
-        <TouchableOpacity
-          style={{
-            backgroundColor: '#01a9b4',
-            width: 200,
-            height: 40,
-            borderRadius: 10,
-            display: 'flex',
-            alignSelf: 'center',
-            justifyContent: 'center',
-            marginTop: 20,
-          }}
-          onPress={() => navigation.navigate('Add Contact')}
-        >
-          <Text
-            style={{
-              textAlign: 'center',
-              color: 'white',
-            }}
-          >
-            Create new Contact
-          </Text>
+      <SafeAreaView>
+        <View>
+          <Text>Welcome to nTouch!</Text>
+        </View>
+        <Text>You haven't added any contacts yet.</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Add Contact')}>
+          <Text>Create new Contact</Text>
         </TouchableOpacity>
       </SafeAreaView>
     );
   } else {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#ecfcac', }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#fcf7e1' }}>
         <FlatList
           data={contacts}
           renderItem={renderItem}
@@ -88,6 +51,28 @@ const HomeScreen = ({ navigation }) => {
       </SafeAreaView>
     );
   }
+};
+
+const renderItem = ({ item: { contactInfo, id, date } }) => {
+  return (
+    <View>
+      <View>
+        <Text>{contactInfo.name}</Text>
+        <Text>{contactInfo.phoneNumber}</Text>
+      </View>
+      <View />
+      <Text>
+        Reminder set for:
+        <Text>
+          {' '}
+          {moment(date).format('L')} at {moment(date).format('LT')}
+        </Text>
+      </Text>
+      <TouchableOpacity onPress={() => deleteContact(id)}>
+        <Text> Delete </Text>
+      </TouchableOpacity>
+    </View>
+  );
 };
 
 export default HomeScreen;
