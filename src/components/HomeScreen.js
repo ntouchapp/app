@@ -34,9 +34,6 @@ const HomeScreen = ({ navigation }) => {
   if (!contacts.length) {
     return (
       <SafeAreaView>
-        <View>
-          <Text>Welcome to nTouch!</Text>
-        </View>
         <Text>You haven't added any contacts yet.</Text>
         <TouchableOpacity onPress={() => navigation.navigate('Add Contact')}>
           <Text>Create new Contact</Text>
@@ -78,5 +75,7 @@ const renderItem = ({ item: { contactInfo, id, date } }) => {
     </View>
   );
 };
+
+HomeScreen.navigationOptions = {};
 
 export default HomeScreen;

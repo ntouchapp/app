@@ -13,6 +13,20 @@ import ScheduleContactScreen from './src/components/ScheduleContactScreen';
 
 const Tab = createBottomTabNavigator();
 const ContactStack = createStackNavigator();
+const HomeScreenStack = createStackNavigator();
+const CreateContact = createStackNavigator();
+
+function HomeStackContainer() {
+  return (
+    <HomeScreenStack.Navigator>
+      <HomeScreenStack.Screen
+        name="Home"
+        options={{ tabBarLabel: 'Home' }}
+        component={HomeScreen}
+      />
+    </HomeScreenStack.Navigator>
+  );
+}
 
 function ContactStackContainer() {
   return (
@@ -27,6 +41,17 @@ function ContactStackContainer() {
         component={ScheduleContactScreen}
       />
     </ContactStack.Navigator>
+  );
+}
+
+function CreateContactContainer() {
+  return (
+    <CreateContact.Navigator>
+      <CreateContact.Screen
+        name="Create Contact"
+        component={CreateContactScreen}
+      />
+    </CreateContact.Navigator>
   );
 }
 
@@ -48,8 +73,16 @@ export default function App() {
           })}
           initialRouteName="Home"
         >
-          <Tab.Screen name="Home" component={HomeScreen} />
-          <Tab.Screen name="Add Contact" component={CreateContactScreen} />
+          <Tab.Screen
+            name="Home"
+            component={HomeStackContainer}
+            options={{ title: 'Home' }}
+          />
+          <Tab.Screen
+            name="Add Contact"
+            component={CreateContactContainer}
+            options={{ title: 'Add New Contact' }}
+          />
           <Tab.Screen name="Contacts" component={ContactStackContainer} />
         </Tab.Navigator>
       </ContactProvider>
