@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import {
   View,
@@ -11,6 +11,7 @@ import { ContactContext } from '../context/ContactContext';
 import moment from 'moment';
 import useGetContacts from '../utils/useGetContacts';
 import getExpoToken from '../utils/getExpoToken';
+import { homeScreenStyles } from '../styles/styles';
 
 const HomeScreen = ({ navigation }) => {
   const { contacts, addUserContacts, dContact, setToken } = useContext(
@@ -33,10 +34,16 @@ const HomeScreen = ({ navigation }) => {
 
   if (!contacts.length) {
     return (
-      <SafeAreaView>
-        <Text>You haven't added any contacts yet.</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Add Contact')}>
-          <Text>Create new Contact</Text>
+      <SafeAreaView style={homeScreenStyles.container}>
+        <Text style={homeScreenStyles.noContacts}>
+          You haven't added any contacts yet!
+        </Text>
+
+        <TouchableOpacity
+          style={homeScreenStyles.btn}
+          onPress={() => navigation.navigate('Add Contact')}
+        >
+          <Text style={homeScreenStyles.text}>Create new Contact</Text>
         </TouchableOpacity>
       </SafeAreaView>
     );
@@ -75,7 +82,5 @@ const renderItem = ({ item: { contactInfo, id, date } }) => {
     </View>
   );
 };
-
-HomeScreen.navigationOptions = {};
 
 export default HomeScreen;
