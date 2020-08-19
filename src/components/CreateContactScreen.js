@@ -91,6 +91,7 @@ export const CreateContactScreen = ({ navigation }) => {
     } catch (e) {
       console.log(e);
     }
+    setShow(false);
   };
 
   return (
@@ -118,9 +119,16 @@ export const CreateContactScreen = ({ navigation }) => {
         </View>
 
         <View style={createContactStyles.dateContainer}>
-          <DateButton text="Choose Time:" dateFn={showTimePicker} />
-          <DateButton text="Choose Date:" dateFn={showDatePicker} />
+          <DateButton text="Choose Time" dateFn={showTimePicker} />
+          <DateButton text="Choose Date" dateFn={showDatePicker} />
         </View>
+
+        <TouchableOpacity
+          onPress={handleSubmit(onSubmit)}
+          style={createContactStyles.btn}
+        >
+          <Text style={createContactStyles.ctaBtn}>Add to contacts</Text>
+        </TouchableOpacity>
       </View>
 
       {show && (
@@ -133,9 +141,6 @@ export const CreateContactScreen = ({ navigation }) => {
             display="default"
             onChange={onChange}
           />
-          <TouchableOpacity onPress={handleSubmit(onSubmit)}>
-            <Text>Add to contacts</Text>
-          </TouchableOpacity>
         </View>
       )}
     </SafeAreaView>

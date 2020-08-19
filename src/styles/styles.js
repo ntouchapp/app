@@ -1,5 +1,15 @@
 import { StyleSheet } from 'react-native';
 
+const shadowStyles = {
+  shadowColor: '#000000',
+  shadowOpacity: 0.4,
+  shadowRadius: 1,
+  shadowOffset: {
+    height: 1,
+    width: 1,
+  },
+};
+
 export const homeScreenStyles = StyleSheet.create({
   container: {
     flex: 1,
@@ -16,13 +26,7 @@ export const homeScreenStyles = StyleSheet.create({
   btn: {
     padding: 14,
     borderRadius: 3,
-    shadowColor: '#000000',
-    shadowOpacity: 0.4,
-    shadowRadius: 1,
-    shadowOffset: {
-      height: 1,
-      width: 1,
-    },
+    ...shadowStyles,
   },
   text: {
     fontSize: 16,
@@ -43,6 +47,8 @@ export const createContactStyles = StyleSheet.create({
   },
   dateContainer: {
     alignSelf: 'stretch',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
   },
   formField: {
     margin: 30,
@@ -54,14 +60,33 @@ export const createContactStyles = StyleSheet.create({
     flex: 2.5,
     borderBottomWidth: 1,
     alignSelf: 'stretch',
-    padding: 10,
+    paddingLeft: 10,
     color: 'white',
+    fontSize: 20,
   },
   text: {
     color: 'white',
     flex: 1,
     fontSize: 18,
-    fontWeight: '500',
     marginTop: 10,
+  },
+  dateBtn: {
+    backgroundColor: 'yellow',
+    padding: 15,
+    borderRadius: 3,
+    marginBottom: 20,
+    ...shadowStyles,
+  },
+  dateTxt: {
+    fontWeight: '600',
+  },
+  btn: {
+    backgroundColor: 'red',
+    alignSelf: 'center',
+    padding: 10,
+  },
+  ctaBtn: {
+    padding: 2,
+    borderRadius: 1,
   },
 });

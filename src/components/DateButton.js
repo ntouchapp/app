@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Keyboard, Text } from 'react-native';
+import { createContactStyles } from '../styles/styles';
 
 const DateButton = ({ dateFn, text }) => (
   <TouchableOpacity
@@ -8,8 +9,9 @@ const DateButton = ({ dateFn, text }) => (
       Keyboard.dismiss();
       dateFn();
     }}
+    style={createContactStyles.dateBtn}
   >
-    <Text>{text}</Text>
+    <Text style={createContactStyles.dateTxt}>{text}</Text>
   </TouchableOpacity>
 );
 
