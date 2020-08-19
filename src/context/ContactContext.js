@@ -25,10 +25,10 @@ const ContactProvider = ({ children }) => {
   function saveNote(id, text) {
     const contact = contacts.find((contact) => contact.id === id);
     const strId = Math.floor(Math.random() * 300).toString();
-    if (contacts.notes) {
-      contacts.notes.push({ id: strId, text });
+    if (contact.notes) {
+      contact.notes.push({ id: strId, text });
     } else {
-      contacts.notes = [
+      contact.notes = [
         {
           id: strId,
           text,
