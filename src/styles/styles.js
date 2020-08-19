@@ -33,3 +33,35 @@ export const homeScreenStyles = StyleSheet.create({
     padding: 15,
   },
 });
+
+export const createContactStyles = StyleSheet.create({
+  container: {
+    backgroundColor: '#399ffa',
+  },
+  fieldContainer: {
+    alignSelf: 'stretch',
+  },
+  dateContainer: {
+    alignSelf: 'stretch',
+  },
+  formField: {
+    margin: 30,
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 15,
+  },
+  textInput: {
+    flex: 2.5,
+    borderBottomWidth: 1,
+    alignSelf: 'stretch',
+    padding: 10,
+    color: 'white',
+  },
+  text: {
+    color: 'white',
+    flex: 1,
+    fontSize: 18,
+    fontWeight: '500',
+    marginTop: 10,
+  },
+});

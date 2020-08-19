@@ -8,6 +8,7 @@ import {
   Keyboard,
   Alert,
 } from 'react-native';
+import { createContactStyles } from '../styles/styles';
 
 import moment from 'moment';
 import { ContactContext } from '../context/ContactContext';
@@ -93,34 +94,49 @@ export const CreateContactScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView>
-      <Text>Create new contact</Text>
-      <View>
-        <View>
-          <FormField name="name" text="Name: " fn={setValue} />
-          <FormField name="phoneNumber" text="Phone Number: " fn={setValue} />
-          <FormField text="Email: " name="email" fn={setValue} />
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={createContactStyles.container}>
+        <View style={createContactStyles.fieldContainer}>
+          <FormField
+            name="name"
+            text="Name: "
+            fn={setValue}
+            placeholder="Sam Brown"
+          />
+          <FormField
+            name="phoneNumber"
+            text="Number: "
+            fn={setValue}
+            placeholder="777-888-222"
+          />
+          <FormField
+            placeholder="example@gmail.com"
+            text="Email: "
+            name="email"
+            fn={setValue}
+          />
         </View>
 
-        <View>
+        <View style={createContactStyles.dateContainer}>
           <DateButton text="Choose Time:" dateFn={showTimePicker} />
           <DateButton text="Choose Date:" dateFn={showDatePicker} />
         </View>
-
-        <TouchableOpacity onPress={handleSubmit(onSubmit)}>
-          <Text>Add to contacts</Text>
-        </TouchableOpacity>
       </View>
 
       {show && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode={mode}
-          is24Hour={true}
-          display="default"
-          onChange={onChange}
-        />
+        <View>
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            mode={mode}
+            is24Hour={true}
+            display="default"
+            onChange={onChange}
+          />
+          <TouchableOpacity onPress={handleSubmit(onSubmit)}>
+            <Text>Add to contacts</Text>
+          </TouchableOpacity>
+        </View>
       )}
     </SafeAreaView>
   );
