@@ -10,6 +10,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import ContactProvider from './src/context/ContactContext';
 import ContactListScreen from './src/components/ContactListScreen';
 import ScheduleContactScreen from './src/components/ScheduleContactScreen';
+import CreateNoteScreen from './src/components/CreateNoteScreen';
+import { useFonts, Inter_900Black } from '@expo-google-fonts/inter';
+import { AppLoading } from 'expo';
 
 const Tab = createBottomTabNavigator();
 const ContactStack = createStackNavigator();
@@ -23,6 +26,11 @@ function HomeStackContainer() {
         name="Home"
         options={{ tabBarLabel: 'Home' }}
         component={HomeScreen}
+      />
+      <HomeScreenStack.Screen
+        name="Add Note Screen"
+        options={{ tabBarLabel: 'Add note' }}
+        component={CreateNoteScreen}
       />
     </HomeScreenStack.Navigator>
   );
@@ -57,38 +65,47 @@ function CreateContactContainer() {
 }
 
 export default function App() {
-  return (
-    <NavigationContainer>
-      <ContactProvider>
-        <Tab.Navigator
-          screenOptions={({ route }) => ({
-            tabBarIcon: ({ size }) => {
-              let iconName;
-              if (route.name === 'Home') {
-                iconName = 'ios-home';
-              } else if (route.name === 'Add Contact') {
-                iconName = 'ios-add-circle-outline';
-              } else {
-                iconName = 'ios-people';
-              }
-              return <Ionicons name={iconName} size={size} color={'#716992'} />;
-            },
-          })}
-          initialRouteName="Home"
-        >
-          <Tab.Screen
-            name="Home"
-            component={HomeStackContainer}
-            options={{ title: 'Home' }}
-          />
-          <Tab.Screen
-            name="Add Contact"
-            component={CreateContactContainer}
-            options={{ title: 'Add New Contact' }}
-          />
-          <Tab.Screen name="Contacts" component={ContactStackContainer} />
-        </Tab.Navigator>
-      </ContactProvider>
-    </NavigationContainer>
-  );
+  let [fontsLoaded] = useFonts({
+    Inter_900Black,
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  } else
+    return (
+      <NavigationContainer>
+        <ContactProvider>
+          <Tab.Navigator
+            screenOptions={({ route }) => ({
+              tabBarIcon: ({ size }) => {
+                let iconName;
+                if (route.name === 'Home') {
+                  iconName = 'ios-home';
+                } else if (route.name === 'Add Contact') {
+                  iconName = 'ios-add-circle-outline';
+                } else {
+                  iconName = 'ios-people';
+                }
+                return (
+                  <Ionicons name={iconName} size={size} color={'#716992'} />
+                );
+              },
+            })}
+            initialRouteName="Home"
+          >
+            <Tab.Screen
+              name="Home"
+              component={HomeStackContainer}
+              options={{ title: 'Home' }}
+            />
+            <Tab.Screen
+              name="Add Contact"
+              component={CreateContactContainer}
+              options={{ title: 'Add New Contact' }}
+            />
+            <Tab.Screen name="Contacts" component={ContactStackContainer} />
+          </Tab.Navigator>
+        </ContactProvider>
+      </NavigationContainer>
+    );
 }

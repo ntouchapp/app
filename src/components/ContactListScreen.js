@@ -7,7 +7,7 @@ import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import { contactStyles } from '../styles/styles';
 
-function ContactListScreen({ navigation }) {
+function ContactListScreen() {
   const { userContacts } = useContext(ContactContext);
 
   if (!userContacts) {
@@ -20,7 +20,6 @@ function ContactListScreen({ navigation }) {
           renderItem={({ item }) => <Item item={item} />}
           keyExtractor={(item) => item.id}
           extraData={userContacts}
-          navigation={navigation}
         />
       </SafeAreaView>
     );
@@ -58,7 +57,7 @@ function Item({ item: { phoneNumbers, name, emails } }) {
         </View>
         <View style={contactStyles.bot}>
           <Text style={contactStyles.botText}>{email}</Text>
-          <Text>></Text>
+          <Text>{'>'}</Text>
         </View>
       </View>
     </TouchableOpacity>

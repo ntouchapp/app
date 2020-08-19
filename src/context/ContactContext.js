@@ -22,6 +22,27 @@ const ContactProvider = ({ children }) => {
     setContacts(contacts.filter((contact) => contact.id !== id));
   }
 
+  function saveNote(id, text) {
+    const contact = contacts.find((contact) => contact.id === id);
+    if (contact.notes) {
+      contact.notes.push(text);
+    } else {
+      contact.notes = [];
+      contact.notes.push(text);
+    }
+    console.log(contact);
+  }
+
+  function retrieveNotes(id) {
+    const contact = contacts.find((contact) => contact.id === id);
+
+    if (contact.notes) {
+      return contact.notes;
+    } else {
+      return [];
+    }
+  }
+
   return (
     <ContactContext.Provider
       value={{
@@ -32,6 +53,8 @@ const ContactProvider = ({ children }) => {
         userContacts,
         token,
         setToken,
+        saveNote,
+        retrieveNotes,
       }}
     >
       {children}

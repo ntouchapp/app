@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import {
   View,
@@ -12,8 +12,9 @@ import moment from 'moment';
 import useGetContacts from '../utils/useGetContacts';
 import getExpoToken from '../utils/getExpoToken';
 import { homeScreenStyles, contactStyles } from '../styles/styles';
+import { useNavigation } from '@react-navigation/native';
 
-const HomeScreen = ({ navigation }) => {
+function HomeScreen({ navigation }) {
   const { contacts, addUserContacts, dContact, setToken } = useContext(
     ContactContext
   );
@@ -52,18 +53,28 @@ const HomeScreen = ({ navigation }) => {
       <SafeAreaView style={homeScreenStyles.container}>
         <FlatList
           data={contacts}
-          renderItem={renderItem}
+          renderItem={({ item }) => <Item item={item} />}
           keyExtractor={(item) => item.id}
           extraData={contacts}
         />
       </SafeAreaView>
     );
   }
-};
+}
 
-const renderItem = ({ item: { contactInfo, id, date } }) => {
+function Item({ item: { contactInfo, id, date } }) {
+  const navigation = useNavigation();
+  console.log(id);
   return (
-    <View style={contactStyles.container}>
+    <TouchableOpacity
+      style={contactStyles.container}
+      onPress={() =>
+        navigation.navigate('Add Note Screen', {
+          id: id,
+          name: contactInfo.name,
+        })
+      }
+    >
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <Text>{contactInfo.name}</Text>
         <Text>{contactInfo.phoneNumber}</Text>
@@ -89,8 +100,8 @@ const renderItem = ({ item: { contactInfo, id, date } }) => {
           <Text> Delete </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </TouchableOpacity>
   );
-};
+}
 
 export default HomeScreen;
