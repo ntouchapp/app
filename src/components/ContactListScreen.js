@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 
 import { useNavigation } from '@react-navigation/native';
+import { contactStyles } from '../styles/styles';
 
 function ContactListScreen({ navigation }) {
   const { userContacts } = useContext(ContactContext);
@@ -13,7 +14,7 @@ function ContactListScreen({ navigation }) {
     return <View>Looking for your contacts 👀</View>;
   } else
     return (
-      <SafeAreaView style={{ backgroundColor: 'yellow', flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }}>
         <FlatList
           data={userContacts}
           renderItem={({ item }) => <Item item={item} />}
@@ -26,7 +27,7 @@ function ContactListScreen({ navigation }) {
 }
 
 function checkField(field, key) {
-  return typeof field === 'undefined' ? 'N/A' : field[0][key];
+  return typeof field === 'undefined' ? 'No email provided' : field[0][key];
 }
 
 function Item({ item: { phoneNumbers, name, emails } }) {
@@ -43,10 +44,23 @@ function Item({ item: { phoneNumbers, name, emails } }) {
           email: email,
         })
       }
+      style={contactStyles.container}
     >
-      <Text style={{ color: 'black' }}>{name}</Text>
-      <Text style={{ color: 'black' }}>{phoneNumber}</Text>
-      <Text style={{ color: 'black' }}>{email}</Text>
+      <View
+        style={{
+          justifyContent: 'space-between',
+          flex: 1,
+        }}
+      >
+        <View style={contactStyles.top}>
+          <Text style={{ fontSize: 16 }}>{name}</Text>
+          <Text style={{ color: 'black' }}>{phoneNumber}</Text>
+        </View>
+        <View style={contactStyles.bot}>
+          <Text style={contactStyles.botText}>{email}</Text>
+          <Text>></Text>
+        </View>
+      </View>
     </TouchableOpacity>
   );
 }

@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useEffect } from 'react';
 import HomeScreen from './src/components/HomeScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -67,6 +67,8 @@ export default function App() {
                 iconName = 'ios-home';
               } else if (route.name === 'Add Contact') {
                 iconName = 'ios-add-circle-outline';
+              } else {
+                iconName = 'ios-people';
               }
               return <Ionicons name={iconName} size={size} color={'#716992'} />;
             },

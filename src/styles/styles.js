@@ -90,3 +90,23 @@ export const createContactStyles = StyleSheet.create({
     borderRadius: 1,
   },
 });
+
+export const contactStyles = StyleSheet.create({
+  container: {
+    margin: 10,
+    height: 70,
+    borderRadius: 2,
+    padding: 8,
+    shadowColor: 'rgba(0,0,0, .4)', // IOS
+    shadowOffset: { height: 1, width: 1 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 1, //IOS
+    backgroundColor: '#fff',
+    elevation: 2, // Android
+  },
+  top: { flexDirection: 'row', justifyContent: 'space-between' },
+  bot: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+});
