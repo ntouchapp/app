@@ -4,6 +4,7 @@ import DateButton from './DateButton';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { ContactContext } from '../context/ContactContext';
 import moment from 'moment';
+import { createContactStyles } from '../styles/styles';
 
 function ScheduleContactScreen({ route }) {
   const { name, phoneNumber, email } = route.params;
@@ -38,18 +39,23 @@ function ScheduleContactScreen({ route }) {
   }
 
   return (
-    <View>
-      <Text>{name}</Text>
-      <Text>{phoneNumber}</Text>
-      <Text>{email}</Text>
-
-      <View>
-        <DateButton text="Choose Time:" dateFn={showTimePicker} />
-        <DateButton text="Choose Date:" dateFn={showDatePicker} />
+    <View style={{ backgroundColor: '#0a4684', flex: 1 }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-around',
+          marginTop: 40,
+        }}
+      >
+        <DateButton text="Choose Time" dateFn={showTimePicker} />
+        <DateButton text="Choose Date" dateFn={showDatePicker} />
       </View>
 
-      <TouchableOpacity onPress={handleSubmit}>
-        <Text>Add to contacts</Text>
+      <TouchableOpacity
+        onPress={handleSubmit}
+        style={createContactStyles.ctaBtn}
+      >
+        <Text style={{ textAlign: 'center' }}>Add to contacts</Text>
       </TouchableOpacity>
 
       {show && (

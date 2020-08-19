@@ -118,17 +118,21 @@ export const CreateContactScreen = ({ navigation }) => {
           />
         </View>
 
-        <View style={createContactStyles.dateContainer}>
-          <DateButton text="Choose Time" dateFn={showTimePicker} />
-          <DateButton text="Choose Date" dateFn={showDatePicker} />
-        </View>
-
-        <TouchableOpacity
-          onPress={handleSubmit(onSubmit)}
-          style={createContactStyles.btn}
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+          }}
         >
-          <Text style={createContactStyles.ctaBtn}>Add to contacts</Text>
-        </TouchableOpacity>
+          <View style={createContactStyles.dateContainer}>
+            <DateButton text="Choose Time" dateFn={showTimePicker} />
+            <DateButton text="Choose Date" dateFn={showDatePicker} />
+          </View>
+
+          <TouchableOpacity onPress={handleSubmit(onSubmit)}>
+            <Text style={createContactStyles.ctaBtn}>Add to contacts</Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       {show && (

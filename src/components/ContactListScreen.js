@@ -14,7 +14,7 @@ function ContactListScreen({ navigation }) {
     return <View>Looking for your contacts 👀</View>;
   } else
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#0a4684', margin: 0 }}>
         <FlatList
           data={userContacts}
           renderItem={({ item }) => <Item item={item} />}

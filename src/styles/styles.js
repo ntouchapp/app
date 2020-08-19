@@ -14,7 +14,8 @@ export const homeScreenStyles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#399ffa',
+    backgroundColor: '#0a4684',
+    paddingTop: 50,
   },
   noContacts: {
     marginTop: 240,
@@ -40,15 +41,14 @@ export const homeScreenStyles = StyleSheet.create({
 
 export const createContactStyles = StyleSheet.create({
   container: {
-    backgroundColor: '#399ffa',
+    backgroundColor: '#0a4684',
+    flex: 1,
   },
   fieldContainer: {
     alignSelf: 'stretch',
   },
   dateContainer: {
-    alignSelf: 'stretch',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: 'column',
   },
   formField: {
     margin: 30,
@@ -62,17 +62,19 @@ export const createContactStyles = StyleSheet.create({
     alignSelf: 'stretch',
     paddingLeft: 10,
     color: 'white',
-    fontSize: 20,
+    fontSize: 16,
   },
   text: {
     color: 'white',
     flex: 1,
     fontSize: 18,
     marginTop: 10,
+    fontWeight: '600',
   },
   dateBtn: {
-    backgroundColor: 'yellow',
+    backgroundColor: '#5ade7d',
     padding: 15,
+    color: 'white',
     borderRadius: 3,
     marginBottom: 20,
     ...shadowStyles,
@@ -80,21 +82,22 @@ export const createContactStyles = StyleSheet.create({
   dateTxt: {
     fontWeight: '600',
   },
-  btn: {
-    backgroundColor: 'red',
-    alignSelf: 'center',
-    padding: 10,
-  },
+
   ctaBtn: {
-    padding: 2,
-    borderRadius: 1,
+    borderRadius: 3,
+    backgroundColor: '#ec5a12',
+    padding: 15,
+    marginTop: 2,
+    color: 'white',
+    fontWeight: '600',
   },
 });
 
 export const contactStyles = StyleSheet.create({
   container: {
-    margin: 10,
-    height: 70,
+    margin: 5,
+    marginTop: 20,
+    height: 90,
     borderRadius: 2,
     padding: 8,
     shadowColor: 'rgba(0,0,0, .4)', // IOS

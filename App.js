@@ -39,6 +39,7 @@ function ContactStackContainer() {
       <ContactStack.Screen
         name="Schedule Contact"
         component={ScheduleContactScreen}
+        options={({ route }) => ({ title: `Contact ${route.params.name}` })}
       />
     </ContactStack.Navigator>
   );

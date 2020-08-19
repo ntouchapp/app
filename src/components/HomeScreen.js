@@ -11,7 +11,7 @@ import { ContactContext } from '../context/ContactContext';
 import moment from 'moment';
 import useGetContacts from '../utils/useGetContacts';
 import getExpoToken from '../utils/getExpoToken';
-import { homeScreenStyles } from '../styles/styles';
+import { homeScreenStyles, contactStyles } from '../styles/styles';
 
 const HomeScreen = ({ navigation }) => {
   const { contacts, addUserContacts, dContact, setToken } = useContext(
@@ -49,7 +49,7 @@ const HomeScreen = ({ navigation }) => {
     );
   } else {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#fcf7e1' }}>
+      <SafeAreaView style={homeScreenStyles.container}>
         <FlatList
           data={contacts}
           renderItem={renderItem}
@@ -63,22 +63,32 @@ const HomeScreen = ({ navigation }) => {
 
 const renderItem = ({ item: { contactInfo, id, date } }) => {
   return (
-    <View>
-      <View>
+    <View style={contactStyles.container}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <Text>{contactInfo.name}</Text>
         <Text>{contactInfo.phoneNumber}</Text>
       </View>
       <View />
-      <Text>
-        Reminder set for:
-        <Text>
-          {' '}
-          {moment(date).format('L')} at {moment(date).format('LT')}
+
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'flex-end',
+          flex: 1,
+          justifyContent: 'space-between',
+        }}
+      >
+        <Text style={{ fontSize: 14 }}>
+          Scheduled for:
+          <Text>
+            {' '}
+            {moment(date).format('L')} at {moment(date).format('LT')}
+          </Text>
         </Text>
-      </Text>
-      <TouchableOpacity onPress={() => dContact(id)}>
-        <Text> Delete </Text>
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => dContact(id)}>
+          <Text> Delete </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

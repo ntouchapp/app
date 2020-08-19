@@ -8,7 +8,8 @@ const FormField = ({ name, fn, text, placeholder }) => (
     <TextInput
       style={createContactStyles.textInput}
       placeholder={placeholder}
-      placeholderTextColor="white"
+      placeholderTextColor="gray"
+      place
       onChangeText={(text) => fn(name, text)}
     />
   </View>
