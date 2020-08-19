@@ -24,20 +24,24 @@ const ContactProvider = ({ children }) => {
 
   function saveNote(id, text) {
     const contact = contacts.find((contact) => contact.id === id);
-    if (contact.notes) {
-      contact.notes.push(text);
+    const strId = Math.floor(Math.random() * 300).toString();
+    if (contacts.notes) {
+      contacts.notes.push({ id: strId, text });
     } else {
-      contact.notes = [];
-      contact.notes.push(text);
+      contacts.notes = [
+        {
+          id: strId,
+          text,
+        },
+      ];
     }
-    console.log(contact);
   }
 
   function retrieveNotes(id) {
     const contact = contacts.find((contact) => contact.id === id);
 
-    if (contact.notes) {
-      return contact.notes;
+    if (contacts.notes) {
+      return contacts.notes;
     } else {
       return [];
     }

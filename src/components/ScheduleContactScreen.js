@@ -1,14 +1,20 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import DateButton from './DateButton';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { ContactContext } from '../context/ContactContext';
 import moment from 'moment';
 import { createContactStyles } from '../styles/styles';
+import { FlatList } from 'react-native-gesture-handler';
+import { not } from 'react-native-reanimated';
 
 function ScheduleContactScreen({ route }) {
-  const { name, phoneNumber, email } = route.params;
-  const { addContact } = useContext(ContactContext);
+  const { name, phoneNumber, email, id } = route.params;
+  const { addContact, retrieveNotes } = useContext(ContactContext);
+  const [notes, setNotes] = useState([
+    { id: '1', text: 'example' },
+    { id: '2', text: 'noice' },
+  ]);
 
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
@@ -37,6 +43,13 @@ function ScheduleContactScreen({ route }) {
     const contact = { name, phoneNumber, email };
     addContact(contact, moment(date));
   }
+
+  useEffect(() => {
+    const response = retrieveNotes(id);
+    if (response.length > 0) {
+      setNotes(response);
+    }
+  }, []);
 
   return (
     <View style={{ backgroundColor: '#0a4684', flex: 1 }}>
@@ -68,6 +81,42 @@ function ScheduleContactScreen({ route }) {
           onChange={onChange}
         />
       )}
+
+      {notes.length > 0 && (
+        <View style={{ padding: 30 }}>
+          <Text
+            style={{
+              color: 'white',
+              textAlign: 'center',
+              fontSize: 22,
+              fontWeight: '600',
+              textDecorationLine: 'underline',
+            }}
+          >
+            Notes from the past
+          </Text>
+          <FlatList
+            data={notes}
+            style={{ marginTop: 20 }}
+            renderItem={({ item }) => <Item item={item} />}
+          />
+        </View>
+      )}
+    </View>
+  );
+}
+
+function Item({ item }) {
+  return (
+    <View
+      style={{
+        backgroundColor: 'white',
+        marginBottom: 20,
+        minHeight: 100,
+        padding: 10,
+      }}
+    >
+      <Text style={{ fontSize: 18 }}>{item.text}</Text>
     </View>
   );
 }

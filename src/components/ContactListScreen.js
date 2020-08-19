@@ -29,7 +29,7 @@ function checkField(field, key) {
   return typeof field === 'undefined' ? 'No email provided' : field[0][key];
 }
 
-function Item({ item: { phoneNumbers, name, emails } }) {
+function Item({ item: { phoneNumbers, name, emails, id } }) {
   let phoneNumber = checkField(phoneNumbers, 'number');
   let email = checkField(emails, 'email');
   const navigation = useNavigation();
@@ -41,6 +41,7 @@ function Item({ item: { phoneNumbers, name, emails } }) {
           name: name,
           phoneNumber: phoneNumber,
           email: email,
+          id: id,
         })
       }
       style={contactStyles.container}
