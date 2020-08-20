@@ -6,6 +6,7 @@ import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 
 import { useNavigation } from '@react-navigation/native';
 import { contactStyles } from '../styles/styles';
+import ContactLink from './ContactLink';
 
 function ContactListScreen() {
   const { userContacts } = useContext(ContactContext);
@@ -54,10 +55,10 @@ function Item({ item: { phoneNumbers, name, emails, id } }) {
       >
         <View style={contactStyles.top}>
           <Text style={{ fontSize: 16 }}>{name}</Text>
-          <Text style={{ color: 'black' }}>{phoneNumber}</Text>
+          <ContactLink scheme="tel" link={contactInfo.phoneNumber} />
         </View>
         <View style={contactStyles.bot}>
-          <Text style={contactStyles.botText}>{email}</Text>
+          <ContactLink scheme="mailto" link={email} />
           <Text>{'>'}</Text>
         </View>
       </View>

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import {
   View,
@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   Text,
   Alert,
+  Linking,
 } from 'react-native';
 import { ContactContext } from '../context/ContactContext';
 import moment from 'moment';
@@ -13,6 +14,7 @@ import useGetContacts from '../utils/useGetContacts';
 import getExpoToken from '../utils/getExpoToken';
 import { homeScreenStyles, contactStyles } from '../styles/styles';
 import { useNavigation } from '@react-navigation/native';
+import ContactLink from './ContactLink';
 
 function HomeScreen({ navigation }) {
   const { contacts, addUserContacts, dContact, setToken } = useContext(
@@ -77,7 +79,7 @@ function Item({ item: { contactInfo, id, date } }) {
     >
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <Text>{contactInfo.name}</Text>
-        <Text>{contactInfo.phoneNumber}</Text>
+        <ContactLink scheme="tel" link={contactInfo.phoneNumber} />
       </View>
       <View />
 
