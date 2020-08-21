@@ -55,7 +55,7 @@ function Item({ item: { phoneNumbers, name, emails, id } }) {
       >
         <View style={contactStyles.top}>
           <Text style={{ fontSize: 16 }}>{name}</Text>
-          <ContactLink scheme="tel" link={contactInfo.phoneNumber} />
+          <ContactLink scheme="tel" link={phoneNumber} />
         </View>
         <View style={contactStyles.bot}>
           <ContactLink scheme="mailto" link={email} />

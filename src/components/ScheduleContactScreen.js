@@ -70,7 +70,7 @@ function ScheduleContactScreen({ route }) {
       >
         <Text style={{ textAlign: 'center' }}>Add to contacts</Text>
       </TouchableOpacity>
-
+      {/* https://github.com/react-native-community/datetimepicker#style-optional-ios-only */}
       {show && (
         <DateTimePicker
           testID="dateTimePicker"
