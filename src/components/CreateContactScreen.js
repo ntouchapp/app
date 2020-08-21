@@ -20,7 +20,10 @@ import DateButton from './DateButton';
 import FormField from './FormField';
 
 export const CreateContactScreen = ({ navigation }) => {
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(() => {
+    const date = new Date();
+    return date.setDate(date.getDate() + 1);
+  });
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
