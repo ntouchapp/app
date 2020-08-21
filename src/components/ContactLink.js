@@ -17,7 +17,10 @@ const ContactLink = ({ scheme, link }) => {
     return <Text>{link}</Text>;
   } else
     return (
-      <TouchableOpacity onPress={handlePress}>
+      <TouchableOpacity
+        style={{ backgroundColor: 'red', padding: 5 }}
+        onPress={handlePress}
+      >
         <Text>{link}</Text>
       </TouchableOpacity>
     );

@@ -18,7 +18,7 @@ const ContactProvider = ({ children }) => {
     setUserContacts(contacts);
   }
 
-  function dContact(id) {
+  function deleteContact(id) {
     setContacts(contacts.filter((contact) => contact.id !== id));
   }
 
@@ -52,7 +52,7 @@ const ContactProvider = ({ children }) => {
       value={{
         addContact,
         contacts,
-        dContact,
+        deleteContact,
         addUserContacts,
         userContacts,
         token,

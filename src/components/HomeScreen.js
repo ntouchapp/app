@@ -6,7 +6,6 @@ import {
   SafeAreaView,
   Text,
   Alert,
-  Linking,
 } from 'react-native';
 import { ContactContext } from '../context/ContactContext';
 import moment from 'moment';
@@ -17,11 +16,10 @@ import { useNavigation } from '@react-navigation/native';
 import ContactLink from './ContactLink';
 
 function HomeScreen({ navigation }) {
-  const { contacts, addUserContacts, dContact, setToken } = useContext(
+  const { contacts, addUserContacts, deleteContact, setToken } = useContext(
     ContactContext
   );
-  const token = getExpoToken();
-  setToken(token);
+  setToken(getExpoToken());
 
   const { data, error } = useGetContacts();
 
@@ -98,7 +96,7 @@ function Item({ item: { contactInfo, id, date } }) {
             {moment(date).format('L')} at {moment(date).format('LT')}
           </Text>
         </Text>
-        <TouchableOpacity onPress={() => dContact(id)}>
+        <TouchableOpacity onPress={() => deleteContact(id)}>
           <Text> Delete </Text>
         </TouchableOpacity>
       </View>

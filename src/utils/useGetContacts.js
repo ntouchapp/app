@@ -1,7 +1,5 @@
 import * as Contacts from 'expo-contacts';
 import { useEffect, useState, useContext } from 'react';
-import { ContactContext } from '../context/ContactContext';
-import { Alert } from 'react-native';
 
 export default () => {
   const [error, setError] = useState();
